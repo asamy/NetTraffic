@@ -9,4 +9,4 @@ NetTraffic is an application that gives real-time statistics on network usage (d
 
 ## Screenshot
 
-![img](http://4.ii.gl/O6Mvbt.png)
+![img](http://4.ii.gl/_O3FBz.png)
