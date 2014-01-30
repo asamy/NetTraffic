@@ -4,9 +4,8 @@ NetTraffic is an application that gives real-time statistics on network usage (d
 
 ## Requirements
 
-1. libpcap if Linux, winpcap if windows
-2. Qt 4+
-3. A working C++ compiler
+1. winpcap
+2. working C compiler
 
 ## Screenshot
 
