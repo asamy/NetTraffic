@@ -14,7 +14,7 @@ static void print_data(struct capture *c, double kBps, uint32_t pps)
 	coord.Y = consoleInfo.dwCursorPosition.Y;
 
 	printf("\t\t\t\tCurrent usage:\n");
-	printf("\t\t\tKBps: %.2f MBps: %.2f PPS: %d\n\n", kBps, kBps * .0009765625, pps);
+	printf("\t\t\tKBps: %.2f Mbps: %.2f PPS: %d\n\n", kBps, kBps * .0078125, pps);
 
 	printf("\t\t\t\tTotal usage:\n");
 	printf("\t\t\tKB: %.2f MB: %.2f GB: %.2f\n", c->cur_bw, c->cur_bw * 0.001, (c->cur_bw * 0.001) / 1024);
@@ -68,6 +68,7 @@ int main(void)
 		pcap_freealldevs(devs);
 		return 1;
 	}
+	pcap_freealldevs(devs);
 
 	fp = fopen("last_bandwidth.txt", "r");
 	if (fp) {
