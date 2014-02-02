@@ -44,14 +44,14 @@ int main(void)
 	printf("Copyright (C) Ahmed Samy 2014 <f.fallen45@gmail.com>\n\n");
 	printf("\t\t\tNetwork Traffic Analyzer\n");
 
-	if (pcap_findalldevs(&devs, errbuf) == -1) {
+	if (pcap_findalldevs(&devs, errbuf) == -1 || !devs) {
 		fprintf(stderr, "No network devices are currently connected\n");
 		return 1;
 	}
 
 	printf("Enabled Network Devices:\n");
 	for (i = 1, iface = devs; iface; iface = iface->next)
-		printf("%d - %s\n", i, iface->description);
+		printf("%d - %s\n", i++, iface->description);
 
 	printf("Device Index> ");
 	scanf("%d", &j);
