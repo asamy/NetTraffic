@@ -53,12 +53,16 @@ int main(void)
 	for (i = 1, iface = devs; iface; iface = iface->next)
 		printf("%d - %s\n", i++, iface->description);
 
+prompt:
 	printf("Device Index> ");
 	scanf("%d", &j);
 
 	/* Find the interface pointer.  */
-	for (i = 1, iface = devs; iface && i != j; iface = iface->next);
-	/* Now iface points to the appropriate device.  */
+	for (i = 1, iface = devs; iface && i != j; iface = iface->next, ++i);
+	if (!iface) {
+		fprintf(stderr, "Invalid device index %d, please try again.", j);
+		goto prompt;
+	}
 
 	c = capture_new();
 	c->capture_fn = print_data;
