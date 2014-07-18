@@ -14,10 +14,11 @@ static void print_data(struct capture *c, double kBps, uint32_t pps)
 	coord.Y = consoleInfo.dwCursorPosition.Y;
 
 	printf("\t\t\t\tCurrent usage:\n");
-	printf("\t\t\tKBps: %.2f Mbps: %.2f PPS: %d\n\n", kBps, kBps * .0078125, pps);
+	printf("\t\t\t%.2f KBps 		(%.2f Mbps PPS: %5d)\n", kBps, kBps * .0078125, pps);
+	printf("\t\t\t%.2f KBps [Peak]	(%.2f Mbps)\n", c->peak, c->peak * .0078125);
 
 	printf("\t\t\t\tTotal usage:\n");
-	printf("\t\t\tKB: %.2f MB: %.2f GB: %.2f\n", c->cur_bw, c->cur_bw * 0.001, (c->cur_bw * 0.001) / 1024);
+	printf("\t\t\t%.2f MB (%.2f GB)\n", c->cur_bw * 0.001, (c->cur_bw * 0.001) / 1024);
 
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
@@ -26,7 +27,7 @@ static void handle_sig(int sig)
 {
 	FILE *fp = fopen("last_bandwidth.txt", "w");
 
-	fprintf(fp, "%.2f\n", c->cur_bw);
+	fprintf(fp, "%.2f %.2f\n", c->cur_bw, c->peak);
 	fclose(fp);
 
 	fprintf(stderr, "Caught signal, quitting.\n");
@@ -76,7 +77,7 @@ prompt:
 
 	fp = fopen("last_bandwidth.txt", "r");
 	if (fp) {
-		fscanf(fp, "%lf", &c->cur_bw);
+		fscanf(fp, "%lf %lf", &c->cur_bw, &c->peak);
 		fclose(fp);
 	}
 

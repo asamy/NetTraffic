@@ -17,6 +17,9 @@ static void handle_traffic(u_char *p, const struct pcap_pkthdr *header, const u_
 	kBps = (((*(uint64_t*)(pkt_data + 8)) * 1000000) / (delay)) * 0.001;
 	pps  = (((*(uint32_t*)(pkt_data))     * 1000000) / (delay));
 
+	if (c->peak <= kBps)
+		c->peak = kBps;
+
 	c->cur_bw += kBps;
 	c->capture_fn(c, kBps, pps);
 
