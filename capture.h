@@ -23,7 +23,7 @@
 struct capture {
 	pcap_t *fp;
 	double cur_bw;
-	double peak;
+	double peek;
 
 	bool has_err;
 	char *errmsg;
