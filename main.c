@@ -14,9 +14,10 @@ static void print_data(struct capture *c, double kBps, uint32_t pps)
 	coord.Y = consoleInfo.dwCursorPosition.Y;
 
 	printf("\t\t\t\tCurrent usage:\n");
-	printf("\t\t\t%.2f KBps 		(%.2f Mbps PPS: %5d)\n", kBps, kBps * .0078125, pps);
-	printf("\t\t\t%.2f KBps [Peek]	(%.2f Mbps)\n", c->peek, c->peek * .0078125);
+	printf("\t\t\t%.2f KB/s 		(%.2f Mb/s Packets/s: %5d)\n", kBps, kBps * .0078125, pps);
+	printf("\t\t\t%.2f KB/s [Peak]	(%.2f Mb/s)\n", c->peak, c->peak * .0078125);
 
+	putchar('\n');
 	printf("\t\t\t\tTotal usage:\n");
 	printf("\t\t\t%.2f MB (%.2f GB)\n", c->cur_bw * 0.001, (c->cur_bw * 0.001) / 1024);
 
@@ -42,7 +43,7 @@ int main(void)
 	char errbuf[PCAP_ERRBUF_SIZE + 1];
 	FILE *fp;
 
-	printf("Copyright (C) Ahmed Samy 2014 <f.fallen45@gmail.com>\n\n");
+	printf("\t\tCopyright (C) Ahmed Samy 2014 <f.fallen45@gmail.com>\n\n");
 	printf("\t\t\tNetwork Traffic Analyzer\n");
 
 	if (pcap_findalldevs(&devs, errbuf) == -1 || !devs) {

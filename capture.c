@@ -17,8 +17,8 @@ static void handle_traffic(u_char *p, const struct pcap_pkthdr *header, const u_
 	kBps = (((*(uint64_t*)(pkt_data + 8)) * 1000000) / (delay)) * 0.001;
 	pps  = (((*(uint32_t*)(pkt_data))     * 1000000) / (delay));
 
-	if (c->peek <= kBps)
-		c->peek = kBps;
+	if (c->peak <= kBps)
+		c->peak = kBps;
 
 	c->cur_bw += kBps;
 	c->capture_fn(c, kBps, pps);
@@ -112,7 +112,7 @@ bool capture_set_iface(struct capture *c, pcap_if_t *iface)
 		return false;
 	}
 
-	if (pcap_compile(fp, &fcode, "ip and tcp", 1, 0xffffff) < 0) {
+	if (pcap_compile(fp, &fcode, NULL, 1, 0xffffff) < 0) {
 		set_error(c, "unable to compile packet filter");
 		return false;
 	}
